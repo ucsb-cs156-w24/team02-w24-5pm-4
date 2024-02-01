@@ -1,5 +1,17 @@
 # team02-w24-5pm-4
 
+```
+| Table                       | Team Member  | Github Id     |
+|-----------------------------|--------------|---------------|
+| `UCSBDiningCommonsMenuItem` | Samantha     | samanthwest   |
+| `UCSBOrganization`          | Megumi       | megumi-ondo   |
+| `RecommendationRequest`     | Cory         | Cory-Zhao     |
+| `MenuItemReview`            | Rui          | Torry051      |
+| `HelpRequest`               | Cole         | ColeFoster08  |
+| `Articles`                  | Anirudh      | anirudhiyer1  |
+```
+
+
 Instructions: <https://ucsb-cs156.github.io/w24/lab/team02.html>
 
 Deployments:
