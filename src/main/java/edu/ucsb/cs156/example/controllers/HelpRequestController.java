@@ -32,7 +32,7 @@ import java.time.LocalDateTime;
 @RequestMapping("/api/helprequest")
 @RestController
 @Slf4j
-public class HelpRequestController {
+public class HelpRequestController extends ApiController{
     @Autowired
     HelpRequestRepository helpRequestRepository;
 
