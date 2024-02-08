@@ -143,13 +143,13 @@ public class UCSBOrganizationsControllerTests extends ControllerTestCase {
 
                 // act
                 MvcResult response = mockMvc.perform(
-                                post("/api/ucsborganizations/post?orgCode=SKY&orgTranslationShort=SKYDIVING CLUB&orgTranslation=SKYDIVING CLUB AT UCSB&inactive=false")
+                                post("/api/ucsborganizations/post?orgCode=OSLI&orgTranslationShort=STUDENT LIFE&orgTranslation=OFFICE OF STUDENT LIFE&inactive=false")
                                                 .with(csrf()))
                                 .andExpect(status().isOk()).andReturn();
 
                 // assert
-                verify(ucsbOrganizationsRepository, times(1)).save(SKY);
-                String expectedJson = mapper.writeValueAsString(SKY);
+                verify(ucsbOrganizationsRepository, times(1)).save(OSLI);
+                String expectedJson = mapper.writeValueAsString(OSLI);
                 String responseString = response.getResponse().getContentAsString();
                 assertEquals(expectedJson, responseString);
         }
@@ -189,4 +189,5 @@ public class UCSBOrganizationsControllerTests extends ControllerTestCase {
                 String responseString = response.getResponse().getContentAsString();
                 assertEquals(expectedJson, responseString);
         } 
+}
 
