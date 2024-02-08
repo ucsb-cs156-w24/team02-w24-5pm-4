@@ -60,7 +60,7 @@ public class HelpRequestControllerTests extends ControllerTestCase {
 
     @WithMockUser(roles = { "USER" })
     @Test
-    public void logged_in_user_can_get_all_ucsbdates() throws Exception {
+    public void logged_in_user_can_get_all_helprequest() throws Exception {
 
             // arrange
             LocalDateTime ldt1 = LocalDateTime.parse("2022-01-03T00:00:00");
@@ -119,7 +119,7 @@ public class HelpRequestControllerTests extends ControllerTestCase {
 
     @WithMockUser(roles = { "ADMIN", "USER" })
     @Test
-    public void an_admin_user_can_post_a_new_ucsbdate() throws Exception {
+    public void an_admin_user_can_post_a_new_helprequest() throws Exception {
             // arrange
 
             LocalDateTime ldt1 = LocalDateTime.parse("2022-01-03T00:00:00");
@@ -210,7 +210,7 @@ public class HelpRequestControllerTests extends ControllerTestCase {
 
         @WithMockUser(roles = { "ADMIN", "USER" })
         @Test
-        public void admin_can_delete_a_date() throws Exception {
+        public void admin_can_delete_a_helprequest() throws Exception {
                 // arrange
 
                 LocalDateTime ldt1 = LocalDateTime.parse("2022-01-03T00:00:00");
@@ -242,7 +242,7 @@ public class HelpRequestControllerTests extends ControllerTestCase {
         
         @WithMockUser(roles = { "ADMIN", "USER" })
         @Test
-        public void admin_tries_to_delete_non_existant_ucsbdate_and_gets_right_error_message()
+        public void admin_tries_to_delete_non_existant_helprequest_and_gets_right_error_message()
                         throws Exception {
                 // arrange
 
