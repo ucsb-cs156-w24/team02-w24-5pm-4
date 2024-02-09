@@ -1,68 +1,60 @@
 { "databaseChangeLog": [
-    {
-        "changeSet": {
-          "id": "UCSBOrganizations-1",
-          "author": "MegumiO",
-          "preConditions": [
-            {
-              "onFail": "MARK_RAN"
-            },
-            {
-              "not": [
+  {
+      "changeSet": {
+        "id": "UCSBOrganizations-1",
+        "author": "MegumiO",
+        "preConditions": [
+          {
+            "onFail": "MARK_RAN"
+          },
+          {
+            "not": [
+              {
+                "tableExists": {
+                  "tableName": "UCSBORGANIZATIONS"
+                }
+              }
+            ]
+          }
+        ],
+        "changes": [
+          {
+            "createTable": {
+              "columns": [
                 {
-                  "tableExists": {
-                    "tableName": "UCSBORGANIZATIONS"
+                  "column": {
+                    "constraints": {
+                      "primaryKey": true,
+                      "primaryKeyName": "ORGANIZATION_1"
+                    },
+                    "name": "ORG_CODE",
+                    "type": "VARCHAR(255)"
+                  }
+                },
+                {
+                  "column": {
+                    "name": "ORG_TRANSLATION_SHORT",
+                    "type": "VARCHAR(255)"
+                  }
+                },
+                {
+                  "column": {
+                    "name": "ORG_TRANSLATION",
+                    "type": "VARCHAR(255)"
+                  }
+                },
+                {
+                  "column": {
+                    "name": "INACTIVE",
+                    "type": "BOOLEAN"
                   }
                 }
-              ]
+                ]
+              ,
+              "tableName": "UCSBORGANIZATIONS"
             }
-          ],
-          "changes": [
-            {
-              "createTable": {
-                "columns": [
-                  {
-                    "column": {
-                      "constraints": {
-                        "primaryKey": true,
-                        "primaryKeyName": "ORGANIZATIONS_1"
-                      },
-                      "name": "orgCode",
-                      "type": "VARCHAR(255)"
-                    }
-                  },
-                  {
-                    "column": {
-                      "constraints": {
-                        "nullable": false
-                      },
-                      "name": "orgTranslationShort",
-                      "type": "VARCHAR(255)"
-                    }
-                  },
-                  {
-                    "column": {
-                      "constraints": {
-                        "nullable": false
-                      },
-                      "name": "orgTranslation",
-                      "type": "VARCHAR(255)"
-                    }
-                  },
-                  {
-                    "column": {
-                      "constraints": {
-                        "nullable": false
-                      },
-                      "name": "inactive",
-                      "type": "BOOLEAN"
-                    }
-                  }]
-                ,
-                "tableName": "UCSBORGANIZATIONS"
-              }
-            }]
+          }]
 
-        }
-    }
+      }
+  }
 ]}
