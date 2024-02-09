@@ -24,5 +24,5 @@ public class UCSBDate {
 
   private String quarterYYYYQ;
   private String name;  
-  private LocalDateTime localDateTime;
+  private LocalDateTime localDateTime; 
 }
