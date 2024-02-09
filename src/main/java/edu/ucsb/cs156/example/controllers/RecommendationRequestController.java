@@ -46,7 +46,7 @@ public class RecommendationRequestController extends ApiController{
         return requests;
     }
 
-    @Operation(summary= "Create a new request")
+    @Operation(summary= "Create a new recommendation request")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("/post")
     public RecommendationRequest postRecommendationRequest(
@@ -75,5 +75,16 @@ public class RecommendationRequestController extends ApiController{
         RecommendationRequest savedRecommendationRequest = recommendationRequestRepository.save(recommendationRequest);
 
         return savedRecommendationRequest;
+    }
+
+    @Operation(summary= "Get a single recommendation request")
+    @PreAuthorize("hasRole('ROLE_USER')")
+    @GetMapping("")
+    public RecommendationRequest getById(
+            @Parameter(name="id") @RequestParam Long id) {
+        RecommendationRequest recommendationRequest = recommendationRequestRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException(RecommendationRequest.class, id));
+
+        return recommendationRequest;
     }
 }
