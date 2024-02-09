@@ -28,7 +28,7 @@ import javax.validation.Valid;
 import java.time.LocalDateTime;
 
 @Tag(name = "HelpRequest")
-@RequestMapping("/api/HelpRequest")
+@RequestMapping("/api/helprequest")
 @RestController
 @Slf4j
 public class HelpRequestController extends ApiController{
@@ -84,7 +84,7 @@ public class HelpRequestController extends ApiController{
         return helpRequest;
     }
 
-    @Operation(summary= "Delete a HelpRequest")
+    @Operation(summary= "Delete a help request")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @DeleteMapping("")
     public Object deleteHelpRequest(
