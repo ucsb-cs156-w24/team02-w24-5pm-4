@@ -42,18 +42,18 @@ public class UCSBDiningCommonsMenuItemControllerTests extends ControllerTestCase
         @MockBean
         UserRepository userRepository;
 
-        // Tests for GET /api/UCSBDiningCommonsMenuItem/all
+        // Tests for GET /api/ucsbdiningcommonsmenuitem/all
 
         @Test
         public void logged_out_users_cannot_get_all() throws Exception {
-                mockMvc.perform(get("/api/UCSBDiningCommonsMenuItem/all"))
+                mockMvc.perform(get("/api/ucsbdiningcommonsmenuitem/all"))
                                 .andExpect(status().is(403)); // logged out users can't get all
         }
 
         @WithMockUser(roles = { "USER" })
         @Test
         public void logged_in_users_can_get_all() throws Exception {
-                mockMvc.perform(get("/api/UCSBDiningCommonsMenuItem/all"))
+                mockMvc.perform(get("/api/ucsbdiningcommonsmenuitem/all"))
                                 .andExpect(status().is(200)); // logged
         }
 
@@ -62,59 +62,56 @@ public class UCSBDiningCommonsMenuItemControllerTests extends ControllerTestCase
         public void logged_in_user_can_get_all_ucsbdiningcommonmenuitems() throws Exception {
 
                 UCSBDiningCommonsMenuItem ucsbDiningCommonsMenuItem1 = UCSBDiningCommonsMenuItem.builder()
-                                .name("orange")
-                                .station("fruit")
-                                .diningCommonsCode("portola")
+                                .name("name1")
+                                .diningCommonsCode("diningCommonsCode1")
+                                .station("station1")
                                 .build();
 
                 UCSBDiningCommonsMenuItem ucsbDiningCommonsMenuItem2 = UCSBDiningCommonsMenuItem.builder()
-                                .name("brownie")
-                                .station("dessert")
-                                .diningCommonsCode("portola")
+                                .name("name2")
+                                .diningCommonsCode("diningCommonsCode2")
+                                .station("station2")
                                 .build();
 
-                ArrayList<UCSBDiningCommonsMenuItem> expectedDiningCommonsMenuItems = new ArrayList<>();
-                expectedDiningCommonsMenuItems
-                                .addAll(Arrays.asList(ucsbDiningCommonsMenuItem1, ucsbDiningCommonsMenuItem2));
+                ArrayList<UCSBDiningCommonsMenuItem> expectedDates = new ArrayList<>();
+                expectedDates.addAll(Arrays.asList(ucsbDiningCommonsMenuItem1, ucsbDiningCommonsMenuItem2));
 
-                when(ucsbDiningCommonsMenuItemRepository.findAll()).thenReturn(expectedDiningCommonsMenuItems);
+                when(ucsbDiningCommonsMenuItemRepository.findAll()).thenReturn(expectedDates);
 
                 // act
-                MvcResult response = mockMvc.perform(get("/api/UCSBDiningCommonsMenuItem/all"))
+                MvcResult response = mockMvc.perform(get("/api/ucsbdiningcommonsmenuitem/all"))
                                 .andExpect(status().isOk()).andReturn();
 
                 // assert
 
                 verify(ucsbDiningCommonsMenuItemRepository, times(1)).findAll();
-                String expectedJson = mapper.writeValueAsString(expectedDiningCommonsMenuItems);
+                String expectedJson = mapper.writeValueAsString(expectedDates);
                 String responseString = response.getResponse().getContentAsString();
                 assertEquals(expectedJson, responseString);
         }
 
-        // Tests for POST /api/ucsbdates/post...
-
         @Test
         public void logged_out_users_cannot_post() throws Exception {
-                mockMvc.perform(post("/api/UCSBDiningCommonsMenuItem/post"))
+                mockMvc.perform(post("/api/ucsbdiningcommonsmenuitem/post"))
                                 .andExpect(status().is(403));
         }
 
         @WithMockUser(roles = { "USER" })
         @Test
         public void logged_in_regular_users_cannot_post() throws Exception {
-                mockMvc.perform(post("/api/UCSBDiningCommonsMenuItem/post"))
+                mockMvc.perform(post("/api/ucsbdiningcommonsmenuitem/post"))
                                 .andExpect(status().is(403)); // only admins can post
         }
 
         @WithMockUser(roles = { "ADMIN", "USER" })
         @Test
-        public void an_admin_user_can_post_a_new_ucsbdiningcommonsmenuitem() throws Exception {
+        public void an_admin_user_can_post_a_new_ucsbdate() throws Exception {
                 // arrange
 
                 UCSBDiningCommonsMenuItem ucsbDiningCommonsMenuItem1 = UCSBDiningCommonsMenuItem.builder()
-                                .name("orange")
-                                .station("fruit")
-                                .diningCommonsCode("portola")
+                                .name("name1")
+                                .diningCommonsCode("diningCommonsCode1")
+                                .station("station1")
                                 .build();
 
                 when(ucsbDiningCommonsMenuItemRepository.save(eq(ucsbDiningCommonsMenuItem1)))
@@ -122,7 +119,7 @@ public class UCSBDiningCommonsMenuItemControllerTests extends ControllerTestCase
 
                 // act
                 MvcResult response = mockMvc.perform(
-                                post("/api/UCSBDiningCommonsMenuItem/post?name=orange&station=fruit&diningCommonsCode=portola")
+                                post("/api/ucsbdiningcommonsmenuitem/post?name=name1&diningCommonsCode=diningCommonsCode1&station=station1")
                                                 .with(csrf()))
                                 .andExpect(status().isOk()).andReturn();
 
@@ -132,4 +129,5 @@ public class UCSBDiningCommonsMenuItemControllerTests extends ControllerTestCase
                 String responseString = response.getResponse().getContentAsString();
                 assertEquals(expectedJson, responseString);
         }
+
 }

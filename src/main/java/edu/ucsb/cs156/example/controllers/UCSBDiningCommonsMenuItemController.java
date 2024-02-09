@@ -12,7 +12,6 @@ import lombok.extern.slf4j.Slf4j;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,42 +24,41 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 
-import java.time.LocalDateTime;
-
 @Tag(name = "UCSBDiningCommonsMenuItem")
-@RequestMapping("/api/UCSBDiningCommonsMenuItem")
+@RequestMapping("/api/ucsbdiningcommonsmenuitem")
 @RestController
 @Slf4j
 public class UCSBDiningCommonsMenuItemController extends ApiController {
 
     @Autowired
-    UCSBDiningCommonsMenuItemRepository ucsbDiningCommonsMenuItemRepository;
+    UCSBDiningCommonsMenuItemRepository UCSBDiningCommonsMenuItemRepository;
 
-    @Operation(summary = "List ucsb dining commons menu items")
+    @Operation(summary = "List all UCSB dining commons menu items")
     @PreAuthorize("hasRole('ROLE_USER')")
     @GetMapping("/all")
     public Iterable<UCSBDiningCommonsMenuItem> allUCSBDiningCommonsMenuItems() {
-        Iterable<UCSBDiningCommonsMenuItem> items = ucsbDiningCommonsMenuItemRepository.findAll();
-        return items;
+        Iterable<UCSBDiningCommonsMenuItem> dates = UCSBDiningCommonsMenuItemRepository.findAll();
+        return dates;
     }
 
-    @Operation(summary = "Create a new dining commons menu item")
+    @Operation(summary = "Create a UCSB dining common menu item")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("/post")
     public UCSBDiningCommonsMenuItem postUCSBDiningCommonsMenuItem(
             @Parameter(name = "diningCommonsCode") @RequestParam String diningCommonsCode,
-            @Parameter(name = "name") @RequestParam String name,
-            @Parameter(name = "station") @RequestParam String station)
+            @Parameter(name = "station") @RequestParam String station,
+            @Parameter(name = "name") @RequestParam String name)
             throws JsonProcessingException {
 
         UCSBDiningCommonsMenuItem ucsbDiningCommonsMenuItem = new UCSBDiningCommonsMenuItem();
-        ucsbDiningCommonsMenuItem.setDiningCommonsCode(diningCommonsCode);
         ucsbDiningCommonsMenuItem.setName(name);
         ucsbDiningCommonsMenuItem.setStation(station);
+        ucsbDiningCommonsMenuItem.setDiningCommonsCode(diningCommonsCode);
 
-        UCSBDiningCommonsMenuItem ucsbDiningCommonsMenuItem2 = ucsbDiningCommonsMenuItemRepository
+        UCSBDiningCommonsMenuItem savedUCSBDiningCommonsMenuItem = UCSBDiningCommonsMenuItemRepository
                 .save(ucsbDiningCommonsMenuItem);
 
-        return ucsbDiningCommonsMenuItem2;
+        return savedUCSBDiningCommonsMenuItem;
     }
+
 }
