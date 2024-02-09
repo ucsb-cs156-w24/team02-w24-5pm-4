@@ -215,7 +215,7 @@ public class MenuItemReviewControllerTests extends ControllerTestCase {
 
     // Tests for PUT /api/menuitemreview?id=... 
 
-        @WithMockUser(roles = { "ADMIN", "USER" })
+        @WithMockUser(roles = { "ADMIN" , "USER" })
         @Test
         public void admin_can_edit_an_existing_menuitemreview() throws Exception {
                 // arrange

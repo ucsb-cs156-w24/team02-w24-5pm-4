@@ -86,7 +86,7 @@ public class MenuItemReviewController extends ApiController {
         return menuItemReview;
     }
 
-    @Operation(summary= "Update a single review")
+    @Operation(summary=  "Update a single review")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping("")
     public MenuItemReview updateMenuItemReview(
