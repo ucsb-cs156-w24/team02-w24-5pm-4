@@ -189,5 +189,79 @@ public class UCSBOrganizationsControllerTests extends ControllerTestCase {
                 assertEquals("EntityNotFoundException", json.get("type"));
                 assertEquals("UCSBOrganizations with id gauchowebdev not found", json.get("message"));
         }
+
+        // Tests for PUT /api/ucsbdiningcommons?...
+
+        @WithMockUser(roles = { "ADMIN", "USER" })
+        @Test
+        public void admin_can_edit_an_existing_organizations() throws Exception {
+                // arrange
+
+                UCSBOrganizations orgOrig = UCSBOrganizations.builder()
+                                .orgCode("ZPR")
+                                .orgTranslationShort("ZETA PHI RHO")
+                                .orgTranslation("ZETA PHI RHO")
+                                .inactive(false)
+                                .build();
+
+                UCSBOrganizations orgEdited = UCSBOrganizations.builder()
+                                .orgCode("ZPP")
+                                .orgTranslationShort("ZETA PHI PHI")
+                                .orgTranslation("ZETA PHI PHI")
+                                .inactive(true)
+                                .build();
+
+                String requestBody = mapper.writeValueAsString(orgEdited);
+
+                when(ucsbOrganizationsRepository.findById(eq("ZPR"))).thenReturn(Optional.of(orgOrig));
+
+                // act
+                MvcResult response = mockMvc.perform(
+                                put("/api/ucsborganizations?orgCode=ZPR")
+                                                .contentType(MediaType.APPLICATION_JSON)
+                                                .characterEncoding("utf-8")
+                                                .content(requestBody)
+                                                .with(csrf()))
+                                .andExpect(status().isOk()).andReturn();
+
+                // assert
+                verify(ucsbOrganizationsRepository, times(1)).findById("ZPR");
+                verify(ucsbOrganizationsRepository, times(1)).save(orgEdited); // should be saved with updated info
+                String responseString = response.getResponse().getContentAsString();
+                assertEquals(requestBody, responseString);
+        }
+
+
+        @WithMockUser(roles = { "ADMIN", "USER" })
+        @Test
+        public void admin_cannot_edit_organizations_that_does_not_exist() throws Exception {
+                // arrange
+
+                UCSBOrganizations editedOrgs = UCSBOrganizations.builder()
+                                .orgCode("gauchowebdev")
+                                .orgTranslationShort("Gaucho Web Dev")
+                                .orgTranslation("Gaucho Web Development")
+                                .inactive(false)
+                                .build();
+
+                String requestBody = mapper.writeValueAsString(editedOrgs);
+
+                when(ucsbOrganizationsRepository.findById(eq("gauchowebdev"))).thenReturn(Optional.empty());
+
+                // act
+                MvcResult response = mockMvc.perform(
+                                put("/api/ucsborganizations?orgCode=gauchowebdev")
+                                                .contentType(MediaType.APPLICATION_JSON)
+                                                .characterEncoding("utf-8")
+                                                .content(requestBody)
+                                                .with(csrf()))
+                                .andExpect(status().isNotFound()).andReturn();
+
+                // assert
+                verify(ucsbOrganizationsRepository, times(1)).findById("gauchowebdev");
+                Map<String, Object> json = responseToJson(response);
+                assertEquals("UCSBOrganizations with id gauchowebdev not found", json.get("message"));
+
+        }
 }
 
