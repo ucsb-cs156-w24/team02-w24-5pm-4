@@ -57,26 +57,6 @@ public class UCSBOrganizationsControllerTests extends ControllerTestCase {
 
         @WithMockUser(roles = { "USER" })
         @Test
-        public void test_that_logged_in_user_can_get_by_id_when_the_id_does_not_exist() throws Exception {
-
-                // arrange
-
-                when(ucsbOrganizationsRepository.findById(eq("gauchocooks"))).thenReturn(Optional.empty());
-
-                // act
-                MvcResult response = mockMvc.perform(get("/api/ucsborganizations?orgCode=gauchocooks"))
-                                .andExpect(status().isNotFound()).andReturn();
-
-                // assert
-
-                verify(ucsbOrganizationsRepository, times(1)).findById(eq("gauchocooks"));
-                Map<String, Object> json = responseToJson(response);
-                assertEquals("EntityNotFoundException", json.get("type"));
-                assertEquals("UCSBOrganizations with id gauchocooks not found", json.get("message"));
-        }
-
-        @WithMockUser(roles = { "USER" })
-        @Test
         public void logged_in_user_can_get_all_ucsborganizations() throws Exception {
 
                 // arrange
@@ -189,5 +169,25 @@ public class UCSBOrganizationsControllerTests extends ControllerTestCase {
                 String responseString = response.getResponse().getContentAsString();
                 assertEquals(expectedJson, responseString);
         } 
+
+        @WithMockUser(roles = { "USER" })
+        @Test
+        public void test_that_logged_in_user_can_get_by_id_when_the_id_does_not_exist() throws Exception {
+
+                // arrange
+
+                when(ucsbOrganizationsRepository.findById(eq("gauchowebdev"))).thenReturn(Optional.empty());
+
+                // act
+                MvcResult response = mockMvc.perform(get("/api/ucsborganizations?orgCode=gauchowebdev"))
+                                .andExpect(status().isNotFound()).andReturn();
+
+                // assert
+
+                verify(ucsbOrganizationsRepository, times(1)).findById(eq("gauchowebdev"));
+                Map<String, Object> json = responseToJson(response);
+                assertEquals("EntityNotFoundException", json.get("type"));
+                assertEquals("UCSBOrganizations with id gauchowebdev not found", json.get("message"));
+        }
 }
 
