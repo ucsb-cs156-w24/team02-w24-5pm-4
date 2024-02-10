@@ -27,7 +27,7 @@
                         "primaryKey": true,
                         "primaryKeyName": "ORGANIZATIONS_1"
                       },
-                      "name": "ORG_Code",
+                      "name": "ORG_CODE",
                       "type": "VARCHAR(255)"
                     }
                   },
