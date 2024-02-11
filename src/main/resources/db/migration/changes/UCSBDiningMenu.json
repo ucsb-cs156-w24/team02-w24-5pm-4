@@ -1,8 +1,9 @@
-{ "databaseChangeLog": [
-    {
+{
+    "databaseChangeLog": [
+      {
         "changeSet": {
-          "id": "UCSBOrganizations-1",
-          "author": "MegumiO",
+          "id": "UCSBDinginMenu-1",
+          "author": "SamW",
           "preConditions": [
             {
               "onFail": "MARK_RAN"
@@ -11,7 +12,7 @@
               "not": [
                 {
                   "tableExists": {
-                    "tableName": "UCSBORGANIZATIONS"
+                    "tableName": "UCSBDININGMENU"
                   }
                 }
               ]
@@ -23,46 +24,39 @@
                 "columns": [
                   {
                     "column": {
+                      "autoIncrement": true,
                       "constraints": {
                         "primaryKey": true,
-                        "primaryKeyName": "ORGANIZATIONS_1"
+                        "primaryKeyName": "CONSTRAINT_1"
                       },
-                      "name": "ORG_CODE",
+                      "name": "ID",
+                      "type": "BIGINT"
+                    }
+                  },
+                  {
+                    "column": {
+                      "name": "DINING_COMMONS_CODE",
                       "type": "VARCHAR(255)"
                     }
                   },
                   {
                     "column": {
-                      "constraints": {
-                        "nullable": false
-                      },
-                      "name": "ORG_TRANSLATION_SHORT",
+                      "name": "NAME",
                       "type": "VARCHAR(255)"
                     }
                   },
                   {
                     "column": {
-                      "constraints": {
-                        "nullable": false
-                      },
-                      "name": "ORG_TRANSLATION",
+                      "name": "STATION",
                       "type": "VARCHAR(255)"
                     }
-                  },
-                  {
-                    "column": {
-                      "constraints": {
-                        "nullable": false
-                      },
-                      "name": "INACTIVE",
-                      "type": "BOOLEAN"
-                    }
-                  }]
-                ,
-                "tableName": "UCSBORGANIZATIONS"
+                  }
+                ],
+                "tableName": "UCSBDININGMENU"
               }
-            }]
-
+            }
+          ]
         }
-    }
-]}
+      }
+    ]
+  }
