@@ -71,6 +71,7 @@ public class UCSBOrganizationsController extends ApiController {
         return orgs;
     }
 
+
     @Operation(summary= "Update a single organization")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping("")
@@ -95,3 +96,4 @@ public class UCSBOrganizationsController extends ApiController {
     
 
 }
+
