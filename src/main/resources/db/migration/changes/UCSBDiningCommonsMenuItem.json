@@ -12,7 +12,7 @@
               "not": [
                 {
                   "tableExists": {
-                    "tableName": "UCSBDININGMENU"
+                    "tableName": "UCSBDININGCOMMONSMENUITEM"
                   }
                 }
               ]
@@ -27,7 +27,7 @@
                       "autoIncrement": true,
                       "constraints": {
                         "primaryKey": true,
-                        "primaryKeyName": "CONSTRAINT_1"
+                        "primaryKeyName": "MENUITEMS_1"
                       },
                       "name": "ID",
                       "type": "BIGINT"
@@ -52,7 +52,7 @@
                     }
                   }
                 ],
-                "tableName": "UCSBDININGMENU"
+                "tableName": "UCSBDININGCOMMONSMENUITEM"
               }
             }
           ]
