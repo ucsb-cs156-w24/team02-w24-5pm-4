@@ -55,9 +55,7 @@ public class MenuItemReviewController extends ApiController {
             @Parameter(name="reviewerEmail") @RequestParam String reviewerEmail,
             @Parameter(name="stars") @RequestParam int stars,
             @Parameter(name="comments") @RequestParam String comments,
-
             @Parameter(name="dateReviewed",description="date (in iso format, e.g. YYYY-mm-ddTHH:MM:SS; see https://en.wikipedia.org/wiki/ISO_8601)")@RequestParam("dateReviewed") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dateReviewed)
-
             throws JsonProcessingException {
 
         // For an explanation of @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
@@ -84,6 +82,27 @@ public class MenuItemReviewController extends ApiController {
             @Parameter(name="id") @RequestParam Long id) {
         MenuItemReview menuItemReview = menuItemReviewRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(MenuItemReview.class, id));
+
+        return menuItemReview;
+    }
+
+    @Operation(summary=  "Update a single review")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PutMapping("")
+    public MenuItemReview updateMenuItemReview(
+            @Parameter(name="id") @RequestParam Long id,
+            @RequestBody @Valid MenuItemReview incoming) {
+
+        MenuItemReview menuItemReview = menuItemReviewRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException(MenuItemReview.class, id));
+
+        menuItemReview.setItemId(incoming.getItemId());
+        menuItemReview.setReviewerEmail(incoming.getReviewerEmail());
+        menuItemReview.setStars(incoming.getStars());
+        menuItemReview.setComments(incoming.getComments());
+        menuItemReview.setDateReviewed(incoming.getDateReviewed());
+
+        menuItemReviewRepository.save(menuItemReview);
 
         return menuItemReview;
     }
