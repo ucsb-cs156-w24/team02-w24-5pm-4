@@ -57,7 +57,7 @@ import java.time.LocalDateTime;
             @Parameter(name=&quot;comments&quot;) @RequestParam String comments,
 
             @Parameter(name=&quot;dateReviewed&quot;,description=&quot;date (in iso format, e.g. YYYY-mm-ddTHH:MM:SS; see https://en.wikipedia.org/wiki/ISO_8601)&quot;)@RequestParam(&quot;dateReviewed&quot;) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dateReviewed)
-
+            
             throws JsonProcessingException {
 
         // For an explanation of @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
@@ -86,6 +86,40 @@ import java.time.LocalDateTime;
 <span class="fc" id="L86">                .orElseThrow(() -&gt; new EntityNotFoundException(MenuItemReview.class, id));</span>
 
 <span class="fc" id="L88">        return menuItemReview;</span>
+    }
+
+    @Operation(summary=  &quot;Update a single review&quot;)
+    @PreAuthorize(&quot;hasRole('ROLE_ADMIN')&quot;)
+    @PutMapping(&quot;&quot;)
+    public MenuItemReview updateMenuItemReview(
+            @Parameter(name=&quot;id&quot;) @RequestParam Long id,
+            @RequestBody @Valid MenuItemReview incoming) {
+
+<span class="fc" id="L98">        MenuItemReview menuItemReview = menuItemReviewRepository.findById(id)</span>
+<span class="fc" id="L99">                .orElseThrow(() -&gt; new EntityNotFoundException(MenuItemReview.class, id));</span>
+
+<span class="fc" id="L101">        menuItemReview.setItemId(incoming.getItemId());</span>
+<span class="fc" id="L102">        menuItemReview.setReviewerEmail(incoming.getReviewerEmail());</span>
+<span class="fc" id="L103">        menuItemReview.setStars(incoming.getStars());</span>
+<span class="fc" id="L104">        menuItemReview.setComments(incoming.getComments());</span>
+<span class="fc" id="L105">        menuItemReview.setDateReviewed(incoming.getDateReviewed());</span>
+
+<span class="fc" id="L107">        menuItemReviewRepository.save(menuItemReview);</span>
+
+<span class="fc" id="L109">        return menuItemReview;</span>
+    }
+
+    @Operation(summary= &quot;Delete a MenuItemReview&quot;)
+    @PreAuthorize(&quot;hasRole('ROLE_ADMIN')&quot;)
+    @DeleteMapping(&quot;&quot;)
+    public Object deleteMenuItemReview(
+            @Parameter(name=&quot;id&quot;) @RequestParam Long id) {
+
+<span class="fc" id="L118">        MenuItemReview menuItemReview =menuItemReviewRepository.findById(id)</span>
+<span class="fc" id="L119">                .orElseThrow(() -&gt; new EntityNotFoundException(MenuItemReview.class, id));</span>
+
+<span class="fc" id="L121">        menuItemReviewRepository.delete(menuItemReview);</span>
+<span class="fc" id="L122">        return genericMessage(&quot;MenuItemReview with id %s deleted&quot;.formatted(id));</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>
